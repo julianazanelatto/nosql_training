@@ -1,0 +1,17 @@
+Propriedades de index no MongoDB
+
+A primeira propriedade é definida como TTL - Time To Live. TTL indexes são um tipo especial de indíces, single-field, que são 
+utilizados para remover documentos de uma coleção após um certo período de tempo ou em um tempo específico ligado ao clock do sistema.
+.
+A expiração de dados é algo muito útil para determinados tipos de informações tais como dados de eventos gerados por máquinas, tais como: logs e sessões. Essas informações só precisam ser armazenadas por um período de tempo específico. Neste caso, o TTL index auxilia no processo.
+
+Como podermos criar um TTL index?
+
+O método de criação do mongoDB é bem transparente com relação a sintaxe do índice a ser criado. No caso de ttl index precisamos apenas definir um novo parâmtro: expiredAfterSeconds: 3600.
+
+Contudo, há uma ressalva. Você precisa estar atento ao campo que você está atribuindo o TTL index, ele deve ser do tipo date ou ser um array que contém valores de datas. Caso contrário, o index não conseguirá cumprir seu papel.
+
+db.eventlog.createIndex( { "lastModifiedDate": 1 }, { expireAfterSeconds: 3600 } )
+
+Criando um documento logficticio:
+
